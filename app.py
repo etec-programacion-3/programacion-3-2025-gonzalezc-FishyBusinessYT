@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 
 # Set database path
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = config.DATABASE_URI
 
 # Initialize database
 db.init_app(app)
