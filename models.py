@@ -20,4 +20,4 @@ class Creature(db.Model):
         }
 
     def __repr__(self):
-        return f'<Creature {self.name}>'
+        return f'<Creature *{self.id}: {self.name}>'

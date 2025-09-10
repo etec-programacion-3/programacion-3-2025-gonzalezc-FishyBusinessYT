@@ -3,9 +3,9 @@ from models import db, Creature
 
 app = Flask(__name__)
 
-# Configure SQLite database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///creatures.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Set database path
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 
 # Initialize database
 db.init_app(app)
@@ -14,8 +14,8 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
-# CRUD Routes
 
+# CRUD Routes
 @app.route('/creatures', methods=['GET'])
 def get_all_creatures():
     """Get all creatures"""
@@ -27,6 +27,13 @@ def get_creature(creature_id):
     """Get a specific creature by ID"""
     creature = Creature.query.get_or_404(creature_id)
     return jsonify(creature.to_dict())
+
+@app.route('/creatures/search', methods=['GET'])
+def search_creatures():
+    """Search creatures by name"""
+    name = request.args.get('name', '')
+    creatures = Creature.query.filter(Creature.name.ilike(f'%{name}%')).all()
+    return jsonify([creature.to_dict() for creature in creatures])
 
 @app.route('/creatures', methods=['POST'])
 def create_creature():
@@ -78,12 +85,6 @@ def delete_creature(creature_id):
     db.session.commit()
     return jsonify({'message': 'Creature deleted successfully'})
 
-@app.route('/creatures/search', methods=['GET'])
-def search_creatures():
-    """Search creatures by name"""
-    name = request.args.get('name', '')
-    creatures = Creature.query.filter(Creature.name.ilike(f'%{name}%')).all()
-    return jsonify([creature.to_dict() for creature in creatures])
 
 if __name__ == '__main__':
     app.run(debug=True)
