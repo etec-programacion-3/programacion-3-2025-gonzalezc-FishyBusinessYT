@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from models import db, Creature
+import config
 
 app = Flask(__name__)
 
@@ -87,4 +88,4 @@ def delete_creature(creature_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host=config.IP, port=config.PORT)
