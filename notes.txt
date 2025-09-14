@@ -1,11 +1,104 @@
-Creature:
-Must have 1 body
-May have several kits
-May have several classes
-
-Also has a difficulty rating (DR) and other stats such as Surface and Deep Health Points (SHP and DHP) and Stamina, that may be redistributed following a set of rules:
-SHP, DHP and Stamina can be redistributed.
-Subtraits may be redistributed 
-
+##* Research *##
 
 Claude chat: https://claude.ai/share/fce2111c-eeb0-47bf-a986-3ad303c147f1
+
+There are a fixed amount of classes, bodies and kits. These could be "hard-coded"
+in a sense, and not necessarily be stored in the database, as they share most 
+data points with creature bodies and pretty much all they accomplish is a flat
+increase of the creature's stats and/or addition of passive features, actions 
+and/or items.
+
+Even as classes and kits increase specific stats, these stats can then be
+redistributed in specific ways. This, in turn, means that in reality there's
+several "pools" of points awarded by classes and kits that creature designers
+can use as they please. This simplifies things a lot. The pools are as follows:
+
+* Main stat pool for SHP, DHP and Stamina.
+* Subtrait pool for all 12 subtraits.
+* Block and Dodge Ratings pool.
+* Defense pool for all 5 defense types.
+
+Let's take, for example, the defense kit:
++5 SHP
++5 DHP
++4 any single defense
++1d4 Block or +1d12 Dodge
+
+Taking the previous "pool" design into account, this kit would work like this:
++10 Main stat points
++4 defense points
++1 B&D Ratings points
+
+
+#* NEW DATA TYPES *#
+
+Dice roll = {
+  amount: int
+  faces: int
+}
+
+Harvestable = {
+  amount: dice roll
+  type of component: string ("Material" | "Power" | "Refinement")
+}
+
+Damage = {
+  amount: dice roll
+  modifier: string (any trait, subtrait or null)
+  type: string ("chill" | "energy" | "heat" | "physical" | "psychic")
+}
+
+Action = {
+  Turn actions: int
+  Stamina: int
+  Range: int
+  Damage: damage
+  Notes: string
+}
+
+
+#* SCHEMAS *#
+
+Creature:
+  Name: string
+  Base DR: int
+
+  SHP: int
+  DHP: int
+  Stamina: int
+
+  # Defenses
+  chill: int
+  energy: int
+  heat: int
+  physical: int
+  psychic: int
+
+  # Traits and subtraits
+  speed: int
+  dexterity: int
+  power: int
+  fortitude: int
+
+  engineering: int
+  memory: int
+  resolve: int
+  awareness: int
+
+  portrayal: int
+  stunt: int
+  appeal: int
+  language: int
+
+  Dodge rating: int
+  Block rating: int
+
+  Passive features: Array of strings
+  Actions: Array of actions
+
+  # Loot
+  base: harvestable
+  test difficulty: float
+  extra: Array of harvestables
+
+  Items: Array of items
