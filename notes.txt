@@ -39,7 +39,7 @@ Dice roll = {
 
 Harvestable = {
   amount: dice roll
-  type of component: string ("Material" | "Power" | "Refinement")
+  type of component: string ("material" | "power" | "refinement")
 }
 
 Damage = {
@@ -61,7 +61,7 @@ Action = {
 
 Creature:
   Name: string
-  Base DR: int
+  DR: int
 
   SHP: int
   DHP: int
@@ -74,7 +74,7 @@ Creature:
   physical: int
   psychic: int
 
-  # Traits and subtraits
+  # Subtraits
   speed: int
   dexterity: int
   power: int
@@ -90,8 +90,8 @@ Creature:
   appeal: int
   language: int
 
-  Dodge rating: int
   Block rating: int
+  Dodge rating: int
 
   Passive features: Array of strings
   Actions: Array of actions
