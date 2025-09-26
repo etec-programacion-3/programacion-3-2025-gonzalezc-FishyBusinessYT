@@ -30,75 +30,136 @@ Taking the previous "pool" design into account, this kit would work like this:
 +1 B&D Ratings points
 
 
-#* NEW DATA TYPES *#
-
-Dice roll = {
-  amount: int
-  faces: int
-}
-
-Harvestable = {
-  amount: dice roll
-  type of component: string ("material" | "power" | "refinement")
-}
-
-Damage = {
-  amount: dice roll
-  modifier: string (any trait, subtrait or null)
-  type: string ("chill" | "energy" | "heat" | "physical" | "psychic")
-}
-
-Action = {
-  Turn actions: int
-  Stamina: int
-  Range: int
-  Damage: damage
-  Notes: string
-}
+For harvestable materials, the test difficulty is always half of the creature's DR.
 
 
 #* SCHEMAS *#
+# Numeric stats like defenses and subtraits etc.
+Stats:
+  name: string
+  value: int
 
+# Creatures
 Creature:
-  Name: string
-  DR: int
+  name: string
+  description: string
 
-  SHP: int
-  DHP: int
-  Stamina: int
+# Passive features
+Passives:
+  name: string
+  description: string
 
-  # Defenses
-  chill: int
-  energy: int
-  heat: int
-  physical: int
-  psychic: int
+# Actions
+Actions:
+  turn_actions: int
+  stamina: int
+  range: int
+  damage_dice: int
+  damage_dice_faces: int
+  damage_modifier: int (1-18: traits and subtraits)
+  damage_type: int (1-6: chill, energy, heat, physical, psychic or none)
+  notes: string
 
-  # Subtraits
-  speed: int
-  dexterity: int
-  power: int
-  fortitude: int
+# Harvestable components
+Harvestables:
+  yield_dice: int
+  yield_dice_faces: int
+  requires_test: bool
+  type: int (1-3: material, power or refinement)
 
-  engineering: int
-  memory: int
-  resolve: int
-  awareness: int
 
-  portrayal: int
-  stunt: int
-  appeal: int
-  language: int
+#* RELATIONSHIPS *#
+One creature to many stats
+Many creatures to many passive features
+One creature to many actions
+One creature to many harvestable components
 
-  Block rating: int
-  Dodge rating: int
 
-  Passive features: Array of strings
-  Actions: Array of actions
+#* ALL STATS *#
+difficulty
+surface_health
+deep_health
+stamina
 
-  # Loot
-  base: harvestable
-  test difficulty: float
-  extra: Array of harvestables
+chill
+energy
+heat
+physical
+psychic
 
-  Items: Array of items
+speed
+dexterity
+power
+fortitude
+engineering
+memory
+resolve
+awareness
+portrayal
+stunt
+appeal
+language
+
+block
+dodge
+
+
+#* DBDIAGRAM CODE *#
+
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table creatures {
+  id int [primary key]
+  name varchar
+  description varchar
+}
+
+Table stats {
+  id int [primary key]
+  creature_id int
+  name varchar
+  value int
+}
+
+Table passives {
+  id int [primary key]
+  name varchar
+  description varchar
+}
+
+Table actions {
+  id int [primary key]
+  creature_id int
+  turn_actions int
+  stamina int
+  range int
+  damage_dice int
+  damage_dice_faces int
+  damage_modifier int 
+  damage_type int
+  notes varchar
+}
+
+Table harvestables {
+  id int [primary key]
+  creature_id int
+  yield_dice int
+  yield_dice_faces int 
+  requires_test bool
+  type int
+}
+
+Table creatures_passives {
+  id int [primary key]
+  creature_id int 
+  passive_id int
+}
+
+
+Ref creature_stats: stats.creature_id > creatures.id
+Ref creature_actions: actions.creature_id > creatures.id
+Ref creature_harvestables: harvestables.creature_id > creatures.id
+
+Ref: creatures_passives.creature_id > creatures.id
+Ref: creatures_passives.passive_id > passives.id
