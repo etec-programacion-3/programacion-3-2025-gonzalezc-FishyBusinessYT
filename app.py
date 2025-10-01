@@ -41,12 +41,14 @@ def create_creature():
     """Create a new creature"""
     data = request.get_json()
 
-    # Basic validation
+    # Basic validation (TODO missing many fields)
+    # TODO dynamic validation based on creature schema?
     required_fields = ['name', 'difficulty_rating', 'shp', 'dhp']
     for field in required_fields:
         if field not in data:
             return jsonify({'error': f'Missing required field: {field}'}), 400
 
+    # TODO fix this to match new schema
     creature = Creature(
         name=data['name'],
         difficulty_rating=data['difficulty_rating'],
@@ -66,6 +68,7 @@ def update_creature(creature_id):
     data = request.get_json()
 
     # Update fields if provided
+    # TODO fix this to match new schema
     if 'name' in data:
         creature.name = data['name']
     if 'difficulty_rating' in data:
