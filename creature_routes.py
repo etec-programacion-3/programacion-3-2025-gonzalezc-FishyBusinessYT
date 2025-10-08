@@ -3,7 +3,7 @@ from models import db, Creature, Stat, Action, Harvestable, Passive
 from validation import validate_creature_data
 
 def get_all_creatures():
-    creatures = Creatures.query.all()
+    creatures = Creature.query.all()
     return jsonify([creature.to_dict() for creature in creatures])
 
 
