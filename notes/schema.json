@@ -1,0 +1,238 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 50
+    },
+    "description": {
+      "type": "string"
+    },
+    "stats": {
+      "type": "object",
+      "properties": {
+        "dr": {
+          "type": "number",
+          "minimum": 1
+        },
+        "shp": {
+          "type": "number",
+          "minimum": 1
+        },
+        "dhp": {
+          "type": "number",
+          "minimum": 1
+        },
+        "stamina": {
+          "type": "number",
+          "minimum": 1
+        },
+        "chilld": {
+          "type": "number"
+        },
+        "energyd": {
+          "type": "number"
+        },
+        "heatd": {
+          "type": "number"
+        },
+        "physicald": {
+          "type": "number"
+        },
+        "psychicd": {
+          "type": "number"
+        },
+        "speed": {
+          "type": "number",
+          "minimum": 1
+        },
+        "dexterity": {
+          "type": "number",
+          "minimum": 1
+        },
+        "power": {
+          "type": "number",
+          "minimum": 1
+        },
+        "fortitude": {
+          "type": "number",
+          "minimum": 1
+        },
+        "engineering": {
+          "type": "number",
+          "minimum": 1
+        },
+        "memory": {
+          "type": "number",
+          "minimum": 1
+        },
+        "resolve": {
+          "type": "number",
+          "minimum": 1
+        },
+        "awareness": {
+          "type": "number",
+          "minimum": 1
+        },
+        "portrayal": {
+          "type": "number",
+          "minimum": 1
+        },
+        "stunt": {
+          "type": "number",
+          "minimum": 1
+        },
+        "appeal": {
+          "type": "number",
+          "minimum": 1
+        },
+        "language": {
+          "type": "number",
+          "minimum": 1
+        },
+        "blockr": {
+          "type": "number",
+          "minimum": 1
+        },
+        "dodger": {
+          "type": "number",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "dr",
+        "shp",
+        "dhp",
+        "stamina",
+        "chilld",
+        "energyd",
+        "heatd",
+        "physicald",
+        "psychicd",
+        "speed",
+        "dexterity",
+        "power",
+        "fortitude",
+        "engineering",
+        "memory",
+        "resolve",
+        "awareness",
+        "portrayal",
+        "stunt",
+        "appeal",
+        "language",
+        "blockr",
+        "dodger"
+      ]
+    },
+    "passives": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 50
+      }
+    },
+    "actions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "properties": {
+          "turn_actions": {
+            "type": "number",
+            "minimum": 0
+          },
+          "stamina": {
+            "type": "number",
+            "minimum": 0
+          },
+          "range": {
+            "type": "number",
+            "minimum": 0
+          },
+          "damage": {
+            "type": "object",
+            "properties": {
+              "dice": {
+                "type": "number",
+                "minimum": 1
+              },
+              "faces": {
+                "type": "number",
+                "minimum": 1
+              },
+              "modifier": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 18
+              },
+              "type": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 5
+              },
+              "notes": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "dice",
+              "faces",
+              "modifier",
+              "type",
+              "notes"
+            ]
+          }
+        },
+        "required": [
+          "turn_actions",
+          "stamina",
+          "range",
+          "damage"
+        ]
+      }
+    },
+    "loot": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "properties": {
+          "dice": {
+            "type": "number",
+            "minimum": 1
+          },
+          "faces": {
+            "type": "number",
+            "minimum": 1
+          },
+          "requires_test": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "number"
+            "minimum": 1,
+            "maximum": 3
+          }
+        },
+        "required": [
+          "dice",
+          "faces",
+          "requires_test",
+          "type"
+        ]
+      }
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "stats",
+    "passives",
+    "actions",
+    "loot"
+  ]
+}
