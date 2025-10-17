@@ -9,4 +9,6 @@ def validate_creature_data(data):
         validate(instance=data, schema=CREATURE_SCHEMA)
         return True, None
     except ValidationError as e:
-        return False, e.message
+        path = '.'.join(str(prop) for prop in e.path) if e.path else 'root'
+        error_msg = f"In field {path}: {e.message}"
+        return False, error_msg
