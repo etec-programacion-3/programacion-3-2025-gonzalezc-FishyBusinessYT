@@ -71,13 +71,13 @@ def create_creature():
             )
             db.session.add(harvestable)
 
-        # Handle passives (reuse existing, create new ones)
+        # Reuse existing passives and create new ones
         for passive_name in data['passives']:
             # Try to find existing passive
             passive = Passive.query.filter_by(name=passive_name).first()
 
             if not passive:
-                # Create new passive if it doesn't exist
+                # Create new passive
                 passive = Passive(
                     name=passive_name,
                     description=''  # Empty description for now

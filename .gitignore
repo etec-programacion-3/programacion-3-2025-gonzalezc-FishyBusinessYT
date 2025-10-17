@@ -2,4 +2,4 @@ venv
 __pycache__
 instance
 test.py
-
+test_creature.json
