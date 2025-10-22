@@ -99,18 +99,98 @@ def create_creature():
 
 
 def update_creature(creature_id):
+    """Update an existing creature with partial data"""
     creature = Creature.query.get_or_404(creature_id)
     data = request.get_json()
 
-    # Update fields if provided
-    # TODO: Update this to handle nested relationships
-    if 'name' in data:
-        creature.name = data['name']
-    if 'description' in data:
-        creature.description = data['description']
+    # Validate against update schema
+    is_valid, error_message = validate_creature_data(data, is_update=True)
+    if not is_valid:
+        return jsonify({'error': f'Validation error: {error_message}'}), 400
 
-    db.session.commit()
-    return jsonify(creature.to_dict())
+    try: # Update only provided fields
+        if 'name' in data:
+            creature.name = data['name']
+        if 'description' in data:
+            creature.description = data['description']
+
+        if 'stats' in data:
+            # Delete existing stats
+            Stat.query.filter_by(creature_id=creature.id).delete()
+
+            # Create new stats
+            for stat_name, stat_value in data['stats'].items():
+                stat = Stat(
+                    creature_id=creature.id,
+                    name=stat_name,
+                    value=stat_value
+                )
+                db.session.add(stat)
+
+        if 'actions' in data:
+            # Delete existing actions
+            Action.query.filter_by(creature_id=creature.id).delete()
+
+            # Create new actions
+            for action_data in data['actions']:
+                action = Action(
+                    creature_id=creature.id,
+                    turn_actions=action_data['turn_actions'],
+                    stamina=action_data['stamina'],
+                    range=action_data['range'],
+                    damage_dice=action_data['damage']['dice'],
+                    damage_dice_faces=action_data['damage']['faces'],
+                    damage_modifier=action_data['damage']['modifier'],
+                    damage_type=action_data['damage']['type'],
+                    notes=action_data['damage'].get('notes', '')
+                )
+                db.session.add(action)
+
+        if 'loot' in data:
+            # Delete existing harvestables
+            Harvestable.query.filter_by(creature_id=creature.id).delete()
+
+            # Create new harvestables
+            for loot_data in data['loot']:
+                harvestable = Harvestable(
+                    creature_id=creature.id,
+                    yield_dice=loot_data['dice'],
+                    yield_dice_faces=loot_data['faces'],
+                    requires_test=loot_data['requires_test'],
+                    type=loot_data['type']
+                )
+                db.session.add(harvestable)
+
+        # Update passives if provided - clear all and recreate associations
+        if 'passives' in data:
+            # Clear all existing passive associations
+            creature.passives.clear()
+
+            # Add new passives (reuse existing or create new)
+            for passive_name in data['passives']:
+                # Try to find existing passive
+                passive = Passive.query.filter_by(name=passive_name).first()
+
+                if not passive:
+                    # Create new passive
+                    passive = Passive(
+                        name=passive_name,
+                        description=''  # Empty description for now
+                    )
+                    db.session.add(passive)
+                    db.session.flush()  # Get the passive ID
+
+                # Link passive to creature
+                creature.passives.append(passive)
+
+        # Commit all changes
+        db.session.commit()
+
+        return jsonify(creature.to_dict()), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': f'Database error: {str(e)}'}), 500
 
 
 def delete_creature(creature_id):
