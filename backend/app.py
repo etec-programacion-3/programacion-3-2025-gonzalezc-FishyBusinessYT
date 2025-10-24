@@ -1,10 +1,11 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from models import db, Creature
 import config
 import creature_routes
 
 app = Flask(__name__)
-
+CORS(app)
 
 # Set database path
 app.config['SQLALCHEMY_DATABASE_URI'] = config.DATABASE_URI

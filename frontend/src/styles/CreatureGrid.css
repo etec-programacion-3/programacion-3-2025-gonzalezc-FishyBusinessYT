@@ -1,0 +1,33 @@
+.creature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.loading,
+.error,
+.empty {
+  text-align: center;
+  padding: 3rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.error {
+  color: #e53e3e;
+  font-weight: 500;
+}
+
+.loading {
+  color: #667eea;
+  font-size: 1.2rem;
+}
+
+.empty {
+  color: #718096;
+  font-size: 1.1rem;
+}
