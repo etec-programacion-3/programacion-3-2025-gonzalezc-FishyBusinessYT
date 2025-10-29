@@ -7,6 +7,7 @@ with open('post_schema.json', 'r') as f:
 with open('put_schema.json', 'r') as f:
     CREATURE_PUT_SCHEMA = json.load(f)
 
+
 def validate_creature_data(data, is_update=False):
     try:
         schema = CREATURE_PUT_SCHEMA if is_update else CREATURE_POST_SCHEMA
