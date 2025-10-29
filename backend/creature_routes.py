@@ -2,6 +2,7 @@ from flask import request, jsonify
 from models import db, Creature, Stat, Action, Harvestable, Passive
 from validation import validate_creature_data
 
+
 def get_all_creatures():
     creatures = Creature.query.all()
     return jsonify([creature.to_dict() for creature in creatures])
@@ -32,7 +33,7 @@ def create_creature():
         creature = Creature(
             name=data['name'],
             description=data['description']
-        )
+            )
         db.session.add(creature)
         db.session.flush()  # Get the creature ID without committing
 
@@ -42,7 +43,7 @@ def create_creature():
                 creature_id=creature.id,
                 name=stat_name,
                 value=stat_value
-            )
+                )
             db.session.add(stat)
 
         # Create actions
@@ -57,7 +58,7 @@ def create_creature():
                 damage_modifier=action_data['damage']['modifier'],
                 damage_type=action_data['damage']['type'],
                 notes=action_data['damage'].get('notes', '')
-            )
+                )
             db.session.add(action)
 
         # Create harvestables (loot)
@@ -68,7 +69,7 @@ def create_creature():
                 yield_dice_faces=loot_data['faces'],
                 requires_test=loot_data['requires_test'],
                 type=loot_data['type']
-            )
+                )
             db.session.add(harvestable)
 
         # Reuse existing passives and create new ones
@@ -81,7 +82,7 @@ def create_creature():
                 passive = Passive(
                     name=passive_name,
                     description=''  # Empty description for now
-                )
+                    )
                 db.session.add(passive)
                 db.session.flush()  # Get the passive ID
 
@@ -108,7 +109,7 @@ def update_creature(creature_id):
     if not is_valid:
         return jsonify({'error': f'Validation error: {error_message}'}), 400
 
-    try: # Update only provided fields
+    try:  # Update only provided fields
         if 'name' in data:
             creature.name = data['name']
         if 'description' in data:
@@ -124,7 +125,7 @@ def update_creature(creature_id):
                     creature_id=creature.id,
                     name=stat_name,
                     value=stat_value
-                )
+                    )
                 db.session.add(stat)
 
         if 'actions' in data:
@@ -143,7 +144,7 @@ def update_creature(creature_id):
                     damage_modifier=action_data['damage']['modifier'],
                     damage_type=action_data['damage']['type'],
                     notes=action_data['damage'].get('notes', '')
-                )
+                    )
                 db.session.add(action)
 
         if 'loot' in data:
@@ -158,7 +159,7 @@ def update_creature(creature_id):
                     yield_dice_faces=loot_data['faces'],
                     requires_test=loot_data['requires_test'],
                     type=loot_data['type']
-                )
+                    )
                 db.session.add(harvestable)
 
         # Update passives if provided - clear all and recreate associations
@@ -176,7 +177,7 @@ def update_creature(creature_id):
                     passive = Passive(
                         name=passive_name,
                         description=''  # Empty description for now
-                    )
+                        )
                     db.session.add(passive)
                     db.session.flush()  # Get the passive ID
 
