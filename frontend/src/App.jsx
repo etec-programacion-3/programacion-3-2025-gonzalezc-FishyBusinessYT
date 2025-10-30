@@ -1,4 +1,5 @@
 import Header from './components/Header';
+import CreatureForm from './components/CreatureForm';
 import CreatureGrid from './components/CreatureGrid';
 import './styles/App.css';
 
@@ -9,6 +10,7 @@ export default function App() {
       <Header />
       <main className="app-main">
         <CreatureGrid/>
+        <CreatureForm/>
       </main>
     </div>
   );
