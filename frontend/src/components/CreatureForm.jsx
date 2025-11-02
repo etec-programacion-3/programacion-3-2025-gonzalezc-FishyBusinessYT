@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { api } from '../services/api';
 import BasicInfoSection from './form/BasicInfoSection';
 import StatsSection from './form/StatsSection';
 import PassivesSection from './form/PassivesSection';
@@ -31,39 +32,28 @@ export default function CreatureForm() {
     setIsSubmitting(true);
     setResponseMessage('');
 
-    try { //TODO use a service for this
-      const response = await fetch('http://localhost:3001/creatures', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      });
+    try {
+      await api.createCreature(formData);
+      setResponseMessage('✓ Creature created successfully!');
 
-      if (response.ok) {
-        setResponseMessage('✓ Creature created successfully!');
-        // Reset form
-        setFormData({
-          name: '',
-          description: '',
-          stats: {
-            dr: 1, shp: 1, dhp: 1, stamina: 1,
-            chilld: 0, energyd: 0, heatd: 0, physicald: 0, psychicd: 0,
-            speed: 1, dexterity: 1, power: 1, fortitude: 1,
-            engineering: 1, memory: 1, resolve: 1, awareness: 1,
-            portrayal: 1, stunt: 1, appeal: 1, language: 1,
-            blockr: 1, dodger: 1
-          },
-          passives: [],
-          actions: [],
-          loot: []
-        });
-      } else {
-        const error = await response.json();
-        setResponseMessage(`✗ Error: ${error.error || 'Failed to create creature'}`);
-      }
+      // Reset form
+      setFormData({
+        name: '',
+        description: '',
+        stats: {
+          dr: 1, shp: 1, dhp: 1, stamina: 1,
+          chilld: 0, energyd: 0, heatd: 0, physicald: 0, psychicd: 0,
+          speed: 1, dexterity: 1, power: 1, fortitude: 1,
+          engineering: 1, memory: 1, resolve: 1, awareness: 1,
+          portrayal: 1, stunt: 1, appeal: 1, language: 1,
+          blockr: 1, dodger: 1
+        },
+        passives: [],
+        actions: [],
+        loot: []
+      });
     } catch (error) {
-      setResponseMessage(`✗ Network error: ${error.message}`);
+      setResponseMessage(`✗ Error: ${error.message}`);
     } finally {
       setIsSubmitting(false);
     }
