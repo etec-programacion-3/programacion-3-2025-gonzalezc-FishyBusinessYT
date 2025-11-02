@@ -3,7 +3,6 @@ import { api } from '../services/api';
 import CreatureCard from './CreatureCard';
 import '../styles/CreatureGrid.css';
 
-// CreatureGrid Component
 export default function CreatureGrid() {
   const [creatures, setCreatures] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,21 +10,30 @@ export default function CreatureGrid() {
 
   // Fetch creatures asynchronously
   useEffect(() => {
-    const fetchCreatures = async () => {
-      try {
-        setLoading(true);
-        const data = await api.getAllCreatures();
-        setCreatures(data);
-        setError(null);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchCreatures();
   }, []);
+
+  const fetchCreatures = async () => {
+    try {
+      setLoading(true);
+      const data = await api.getAllCreatures();
+      setCreatures(data);
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (creatureId) => {
+    try {
+      await api.deleteCreature(creatureId);
+      fetchCreatures();
+    } catch (err) {
+      throw new Error('Failed to delete creature: ' + err.message);
+    }
+  };
 
   // Display errors and state
   if (loading) {
@@ -40,11 +48,14 @@ export default function CreatureGrid() {
     return <div className="empty">No creatures found. Add some to get started!</div>;
   }
 
-  // Return the HTML thing
   return (
     <div className="creature-grid">
       {creatures.map((creature) => (
-        <CreatureCard key={creature.id} creature={creature} />
+        <CreatureCard 
+          key={creature.id} 
+          creature={creature}
+          onDelete={handleDelete}
+        />
       ))}
     </div>
   );
