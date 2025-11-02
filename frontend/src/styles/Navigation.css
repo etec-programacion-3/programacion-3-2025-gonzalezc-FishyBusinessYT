@@ -1,12 +1,13 @@
 .navigation {
   display: flex;
+  width: 25%;
+  margin: auto;
   justify-content: center;
   gap: 1rem;
   margin-bottom: 2rem;
   padding: 1rem;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  backdrop-filter: blur(10px);
 }
 
 .nav-button {
@@ -22,7 +23,6 @@
   gap: 0.5rem;
   background: rgba(255, 255, 255, 0.1);
   color: white;
-  backdrop-filter: blur(5px);
 }
 
 .nav-button:hover {
