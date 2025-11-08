@@ -10,6 +10,14 @@ export const api = {
     return response.json();
   },
 
+  getCreature: async (creatureId) => {
+    const response = await fetch(`${API_BASE_URL}/creatures/${creatureId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch creature');
+    }
+    return response.json();
+  },
+
   createCreature: async (creatureData) => {
     const response = await fetch(`${API_BASE_URL}/creatures`, {
       method: 'POST',
