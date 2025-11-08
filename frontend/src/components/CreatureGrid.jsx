@@ -3,7 +3,7 @@ import { api } from '../services/api';
 import CreatureCard from './CreatureCard';
 import '../styles/CreatureGrid.css';
 
-export default function CreatureGrid() {
+export default function CreatureGrid({ onCreatureSelect }) {
   const [creatures, setCreatures] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -55,6 +55,7 @@ export default function CreatureGrid() {
           key={creature.id} 
           creature={creature}
           onDelete={handleDelete}
+          onSelect={onCreatureSelect}
         />
       ))}
     </div>
