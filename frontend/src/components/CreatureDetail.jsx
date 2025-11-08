@@ -17,7 +17,7 @@ const lootTypeLabels = {
   3: 'Component'
 };
 
-export default function CreatureDetail({ creatureId, onBack }) {
+export default function CreatureDetail({ creatureId }) {
   const [creature, setCreature] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -54,10 +54,6 @@ export default function CreatureDetail({ creatureId, onBack }) {
     );
   }
 
-  if (!creature) {
-    return null;
-  }
-
   // Convert stats array to object for easier access
   const statsObj = creature.stats.reduce((acc, stat) => {
     acc[stat.name] = stat.value;
@@ -66,14 +62,6 @@ export default function CreatureDetail({ creatureId, onBack }) {
 
   return (
     <div className="detail-container">
-      <button onClick={onBack} className="btn btn-secondary back-button">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <line x1="19" y1="12" x2="5" y2="12" />
-          <polyline points="12 19 5 12 12 5" />
-        </svg>
-        Back to Grid
-      </button>
-
       <div className="detail-card">
         <div className="detail-header">
           <h1 className="detail-title">{creature.name}</h1>
