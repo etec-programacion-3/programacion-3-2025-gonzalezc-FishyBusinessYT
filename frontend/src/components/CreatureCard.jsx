@@ -21,8 +21,17 @@ export default function CreatureCard({ creature, onDelete }) {
     }
   };
 
+  const handleCardClick = () => {
+    if (!isDeleting && onSelect) {
+      onSelect(creature.id);
+    }
+  };
+
   return (
-    <div className={`creature-card ${isDeleting ? 'deleting' : ''}`}>
+    <div 
+      className={`creature-card ${isDeleting ? 'deleting' : ''}`}
+      onClick={handleCardClick}
+    >
       <div className="creature-card-header">
         <h3 className="creature-name">{creature.name}</h3>
         <button
