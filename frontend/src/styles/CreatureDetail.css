@@ -1,0 +1,278 @@
+.detail-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.back-button {
+  margin-bottom: 1.5rem;
+}
+
+.detail-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  padding: 2.5rem;
+}
+
+.detail-header {
+  border-bottom: 3px solid #667eea;
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.detail-title {
+  color: #667eea;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.detail-section {
+  margin-bottom: 2.5rem;
+}
+
+.detail-section:last-child {
+  margin-bottom: 0;
+}
+
+.detail-section-title {
+  color: #764ba2;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+}
+
+.detail-description {
+  color: #4a5568;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+/* Stats Display */
+.stats-display-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.stat-display-item {
+  background: #f7fafc;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 2px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.stat-display-label {
+  color: #718096;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-display-value {
+  color: #2d3748;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* Passives */
+.passives-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.passive-item {
+  background: #f7fafc;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.passive-name {
+  color: #2d3748;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.passive-description {
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+/* Actions */
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+
+.action-card {
+  background: #f7fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid #e2e8f0;
+}
+
+.action-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.action-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.action-stat-label {
+  color: #718096;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.action-stat-value {
+  color: #2d3748;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.action-damage-title {
+  color: #764ba2;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.action-damage-details {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.damage-dice {
+  color: #e53e3e;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.damage-modifier {
+  color: #38a169;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.damage-type {
+  background: #667eea;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.action-notes {
+  color: #718096;
+  font-size: 0.9rem;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+/* Loot */
+.loot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.loot-card {
+  background: #f7fafc;
+  padding: 1.25rem;
+  border-radius: 8px;
+  border: 2px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.loot-yield,
+.loot-type {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.loot-yield-label,
+.loot-type-label {
+  color: #718096;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.loot-yield-value {
+  color: #2d3748;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.loot-type-value {
+  background: #764ba2;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.loot-test-badge {
+  background: #fbd38d;
+  color: #744210;
+  padding: 0.5rem;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .detail-card {
+    padding: 1.5rem;
+  }
+
+  .detail-title {
+    font-size: 2rem;
+  }
+
+  .stats-display-grid {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  }
+
+  .actions-grid,
+  .loot-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .action-stats {
+    grid-template-columns: 1fr;
+  }
+}

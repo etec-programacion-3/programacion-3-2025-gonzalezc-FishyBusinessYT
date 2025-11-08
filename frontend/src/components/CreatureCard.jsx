@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import '../styles/CreatureCard.css';
 
-export default function CreatureCard({ creature, onDelete }) {
+export default function CreatureCard({ creature, onDelete, onSelect }) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async (e) => {
