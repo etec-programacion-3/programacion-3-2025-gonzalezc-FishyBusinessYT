@@ -10,6 +10,7 @@ import './styles/App.css';
 export default function App() {
   const [currentView, setCurrentView] = useState('grid');
   const [selectedCreatureId, setSelectedCreatureId] = useState(null);
+  const [editingCreatureId, setEditingCreatureId] = useState(null);
 
   const handleCreatureSelect = (creatureId) => {
     setSelectedCreatureId(creatureId);
@@ -18,7 +19,19 @@ export default function App() {
 
   const handleNavigate = (view) => {
     setSelectedCreatureId(null);
+    setEditingCreatureId(null);
     setCurrentView(view);
+  };
+
+  const handleEditCreature = (creatureId) => {
+    setEditingCreatureId(creatureId);
+    setCurrentView('form');
+  };
+
+  const handleBackToDetail = (creatureId) => {
+    setSelectedCreatureId(creatureId);
+    setEditingCreatureId(null);
+    setCurrentView('detail');
   };
 
   return (
@@ -29,9 +42,17 @@ export default function App() {
         {currentView === 'grid' && (
           <CreatureGrid onCreatureSelect={handleCreatureSelect} />
         )}
-        {currentView === 'form' && <CreatureForm />}
+        {currentView === 'form' && (
+          <CreatureForm 
+            editingCreatureId={editingCreatureId}
+            onBackToDetail={handleBackToDetail}
+          />
+        )}
         {currentView === 'detail' && (
-          <CreatureDetail creatureId={selectedCreatureId} />
+          <CreatureDetail 
+            creatureId={selectedCreatureId}
+            onEdit={handleEditCreature}
+          />
         )}
       </main>
     </div>
