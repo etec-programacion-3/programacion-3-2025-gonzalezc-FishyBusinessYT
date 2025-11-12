@@ -33,6 +33,21 @@ export const api = {
     return response.json();
   },
 
+  updateCreature: async (creatureId, creatureData) => {
+    const response = await fetch(`${API_BASE_URL}/creatures/${creatureId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(creatureData)
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to update creature');
+    }
+    return response.json();
+  },
+
   deleteCreature: async (creatureId) => {
     const response = await fetch(`${API_BASE_URL}/creatures/${creatureId}`, {
       method: 'DELETE',
